@@ -8,6 +8,6 @@ export async function POST(req) {
     return NextResponse.json({ error: 'URL is requred' }, { status: 400 })
   }
   const surl = nanoid(7);
-  const shortenedURL = `https://localhost:3000/${surl}`
+  const shortenedURL = `http://localhost:3000/${surl}`
   return NextResponse.json({ newurl: shortenedURL });
 }

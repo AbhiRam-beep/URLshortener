@@ -26,8 +26,6 @@ const Home = () => {
       return false;
     }
 
-
-
   }
 
   const addURL = async (oldurl, newurl) => {
@@ -45,7 +43,8 @@ const Home = () => {
     e.preventDefault()
     if (!inputURL) return;
 
-    const success = await getShortURL(inputURL);
+    await getShortURL(inputURL);
+
     if (shorturl) {
       await addURL(inputURL, shorturl)
     }
