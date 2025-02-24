@@ -4,9 +4,8 @@ import { collection, addDoc } from "firebase/firestore";
 import { useState } from "react";
 
 const Home = () => {
-
   const [shorturl, setShorturl] = useState(null);
-  const [inputURL, setInputURL] = useState(null);
+  const [inputURL, setInputURL] = useState("");
 
   const getShortURL = async (url) => {
     try {
@@ -25,8 +24,7 @@ const Home = () => {
       console.log("error: " + error);
       return false;
     }
-
-  }
+  };
 
   const addURL = async (oldurl, newurl) => {
     try {
@@ -37,34 +35,47 @@ const Home = () => {
       console.log(error);
       return false;
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!inputURL) return;
 
-    await getShortURL(inputURL);
 
-    if (shorturl) {
-      await addURL(inputURL, shorturl)
+    const newShortURL = await getShortURL(inputURL);
+    if (newShortURL) {
+      await addURL(inputURL, newShortURL);
     }
-  }
+
+  };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={inputURL} placeholder="enter URL" onChange={(e) => setInputURL(e.target.value)} />
-        <button type="submit">Submit</button>
-      </form>
-      <div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+      <div className="bg-white shadow-lg rounded-2xl p-6 max-w-md w-full">
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-4">URL Shortener</h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input
+            type="text"
+            value={inputURL}
+            placeholder="Enter URL"
+            onChange={(e) => setInputURL(e.target.value)}
+            className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button type="submit" className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition">
+            Shorten URL
+          </button>
+        </form>
         {shorturl && (
-          <div>
-            <p>Shortened URL: <a href={shorturl} target="_blank">{shorturl}</a></p>
+          <div className="mt-4 p-3 bg-gray-50 border rounded-lg text-center">
+            <p className="text-gray-700">Shortened URL:</p>
+            <a href={shorturl} target="_blank" className="text-blue-500 font-semibold hover:underline">
+              {shorturl}
+            </a>
           </div>
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Home;

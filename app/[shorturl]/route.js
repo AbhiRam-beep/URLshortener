@@ -3,7 +3,7 @@ import { query, where, collection, getDocs } from "firebase/firestore"
 import { NextResponse } from "next/server"
 
 export async function GET(req, { params }) {
-  const { shorturl } = params;
+  const { shorturl } = await params;
 
   try {
     const urlRef = collection(db, "urls");
