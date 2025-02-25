@@ -28,7 +28,8 @@ const Home = () => {
 
   const addURL = async (oldurl, newurl) => {
     try {
-      const docRef = await addDoc(collection(db, "urls"), { oldurl, newurl });
+      const formatted_url = oldurl.replace(/^(https?:\/\/)/, "");
+      const docRef = await addDoc(collection(db, "urls"), { formatted_url, newurl });
       console.log("document id:" + docRef.id);
       return true;
     } catch (error) {

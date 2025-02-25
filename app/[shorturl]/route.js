@@ -7,7 +7,7 @@ export async function GET(req, { params }) {
 
   try {
     const urlRef = collection(db, "urls");
-    const q = query(urlRef, where("newurl", "==", `http://localhost:3000/${shorturl}`));
+    const q = query(urlRef, where("newurl", "==", `https://s-url-one.vercel.app/${shorturl}`));
     const res = await getDocs(q);
 
     if (res.empty) return NextResponse.json({ error: "URL not found" }, { status: 400 });
