@@ -14,7 +14,7 @@ export async function POST(req) {
     const q = query(urlRef, where("oldurl", "==", url));
     const querySnapshot = await getDocs(q);
 
-    if (!querys.empty) {
+    if (!querySnapshot.empty) {
       const existingDoc = querySnapshot.docs[0].data();
       return NextResponse.json({ newurl: existingDoc.shortenedURL });
     }
