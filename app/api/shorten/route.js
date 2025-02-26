@@ -1,7 +1,7 @@
 import { db } from "@/lib/firebase";
 import { nanoid } from "nanoid";
 import { NextResponse } from "next/server";
-import { collection, query, getDocs } from "firebase/firestore";
+import { collection, where, query, getDocs } from "firebase/firestore";
 
 
 export async function POST(req) {
@@ -12,7 +12,7 @@ export async function POST(req) {
   try {
     const urlRef = collection(db, "urls");
     const q = query(urlRef, where("oldurl", "==", url));
-    const querys = await getDocs(q);
+    const querySnapshot = await getDocs(q);
 
     if (!querys.empty) {
       const existingDoc = querySnapshot.docs[0].data();
